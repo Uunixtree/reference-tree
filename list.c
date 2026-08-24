@@ -113,7 +113,7 @@ void emit_tree(char **dirname, bool needfulltree)
       if (dir) {
 	subtotal = listdir(dirname[i], dir, 1, st.st_dev, needfulltree);
 	subtotal.dirs++;
-      }
+      } else if (info != NULL && S_ISDIR(info->mode)) subtotal.dirs++;
     }
     if (dir) {
       free_dir(dir);
