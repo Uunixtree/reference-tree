@@ -1071,11 +1071,15 @@ struct _info **unix_getfulltree(char *d, u_long lev, dev_t dev, off_t *size, cha
     *err = scopy("error opening dir");
     if (lev > 0) errors++;
     if (tmp_pattern) pattern = tmp_pattern;
+    if (ig != NULL) pop_filterstack();
+    if (inf != NULL) pop_infostack();
     return NULL;
   }
   if (n == 0) {
     if (sav != NULL) free_dir(sav);
     if (tmp_pattern) pattern = tmp_pattern;
+    if (ig != NULL) pop_filterstack();
+    if (inf != NULL) pop_infostack();
     return NULL;
   }
   path = xmalloc(pathsize=PATH_MAX);
@@ -1087,6 +1091,8 @@ struct _info **unix_getfulltree(char *d, u_long lev, dev_t dev, off_t *size, cha
     free_dir(sav);
     free(path);
     if (tmp_pattern) pattern = tmp_pattern;
+    if (ig != NULL) pop_filterstack();
+    if (inf != NULL) pop_infostack();
     return NULL;
   }
 
@@ -1158,12 +1164,12 @@ struct _info **unix_getfulltree(char *d, u_long lev, dev_t dev, off_t *size, cha
   if (topsort) qsort(sav,(size_t)n,sizeof(struct _info *), (int (*)(const void *, const void *))topsort);
 
   free(path);
+  if (ig != NULL) pop_filterstack();
+  if (inf != NULL) pop_infostack();
   if (n == 0) {
     free_dir(sav);
     return NULL;
   }
-  if (ig != NULL) pop_filterstack();
-  if (inf != NULL) pop_infostack();
   return sav;
 }
 
