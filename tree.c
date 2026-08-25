@@ -1069,7 +1069,6 @@ struct _info **unix_getfulltree(char *d, u_long lev, dev_t dev, off_t *size, cha
 
   if (dir == NULL && n) {
     *err = scopy("error opening dir");
-    if (lev > 0) errors++;
     if (tmp_pattern) pattern = tmp_pattern;
     if (ig != NULL) pop_filterstack();
     if (inf != NULL) pop_infostack();
@@ -1087,7 +1086,6 @@ struct _info **unix_getfulltree(char *d, u_long lev, dev_t dev, off_t *size, cha
   if (flag.flimit > 0 && n > flag.flimit) {
     sprintf(path,"%ld entries exceeds filelimit, not opening dir",n);
     *err = scopy(path);
-    if (lev > 0) errors++;
     free_dir(sav);
     free(path);
     if (tmp_pattern) pattern = tmp_pattern;
