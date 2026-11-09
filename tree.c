@@ -1174,6 +1174,10 @@ struct _info **unix_getfulltree(char *d, u_long lev, dev_t dev, off_t *size, cha
 	free_dir((*dir)->child);
 	(*dir)->child = NULL;
       }
+      if (hidden_child_list && (*dir)->err != NULL) {
+	free((*dir)->err);
+	(*dir)->err = NULL;
+      }
     }
     if (flag.du) *size += (*dir)->size;
     dir++;
